@@ -41,16 +41,16 @@ for ps in /sys/class/power_supply/*; do
             
             # Format the status text
             case "$status" in
-                Charging)
+                "Charging")
 			status_text="$(printf '\uf0e7')"
                     ;;
-                Discharging)
+                "Discharging")
 			status_text=""
                     ;;
-                Full)
+                "Full")
 			status_text="$(printf '\ueb2d')"
                     ;;
-                Not?charging|"Not charging")
+                "Not charging")
 			status_text="$(printf '\ueb2d')"
                     ;;
                 *)
@@ -67,7 +67,7 @@ done
 # Network status script - warns if disconnected 
 
 # No active connection found
-if [ -z "$(ip a | grep " UP ")" ]; then
+if ip a | grep -q " UP " ; then
     NETWORK="  $(printf '\uead0')"
 fi
 
