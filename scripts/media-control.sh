@@ -39,8 +39,10 @@ get_active_player() {
 }
 
 send_command() {
-    local player=$1
-    local method=$2
+    player=$1
+    method=$2
+    local player
+    local method
     
     dbus-send --print-reply --dest="$player" \
         /org/mpris/MediaPlayer2 \
@@ -48,7 +50,8 @@ send_command() {
 }
 
 adjust_volume() {
-    local delta=$1
+    delta=$1
+    local delta
     
     # Check if wpctl is available
     if ! command -v wpctl &> /dev/null; then
@@ -58,7 +61,8 @@ adjust_volume() {
     
     # Get default sink (audio output)
     # First isolate the Sinks section, then find the line with asterisk
-    local sink=$(wpctl status | sed -n '/Sinks:/,/Sources:/p' | grep '\*' | awk '{print $3}' | tr -d '.')
+    sink=$(wpctl status | sed -n '/Sinks:/,/Sources:/p' | grep '\*' | awk '{print $3}' | tr -d '.')
+    local sink
     
     if [ -z "$sink" ]; then
         echo "Error: Could not find default audio sink"
@@ -71,12 +75,14 @@ adjust_volume() {
         wpctl set-volume "$sink" "${delta}%+"
     else
         # Remove the minus sign for the command
-        local abs_delta=${delta#-}
+        abs_delta=${delta#-}
+	local abs_delta
         wpctl set-volume "$sink" "${abs_delta}%-"
     fi
     
     # Get and display new volume
-    local volume_info=$(wpctl get-volume "$sink")
+    volume_info=$(wpctl get-volume "$sink")
+    local volume_info
     echo "Volume: $volume_info"
 }
 
