@@ -20,7 +20,7 @@ pkgs.symlinkJoin {
     (makeScript "savescreenshot" [ pkgs.grim pkgs.slurp ])
     (makeScript "screenshot" [ pkgs.grim pkgs.slurp ])
 
-    (makeScript "startwm" [ pkgs.dwm pkgs.dwmb ])
+    (makeScript "startwm" [ pkgs.dwl pkgs.dwlb ])
 
     (makeScript "status" [ ]) # ?
     (makeScript "media-control" [ ])  # ?
